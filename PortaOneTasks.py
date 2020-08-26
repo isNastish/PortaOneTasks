@@ -1,20 +1,21 @@
-file = open('original_file.txt').readlines() # Чмтаем файл.
-list1 = [int(i.rstrip()) for i in file] # Создем список всех целых чисел в файле.
+file = open('original_file.txt').readlines() # read file.
+list1 = [int(i.rstrip()) for i in file] # create a list of all values in file
 
-LengthGrow = [] # Здесь будет сохраняться число(длинна наибольшой возрастающей последовательности).
-LengthFall = []# Аналогично LengthGrow только(длинна наибольшой убывающей последовательности).
-Average = 0 # Переменная в которую будем сумировать все числа в файле.
-# Находим медиану чисел в исходном файле.
+LengthGrow = [] # here will be stored the value of the biggest increasing sequence(how much elements in one sequence)
+LengthFall = [] # the same, but decresing sequence.
+Average = 0 # summing up all values into this veriable to find average value in future.
+
+# median.
 for j in range(len(list1)):
-    if (len(list1) % 2) != 0: # Если количество чисел не четное.
-        if j == ((len(list1) - 1) / 2): # Отнимем 1 и делим на 2, потому что это как раз индекс числа середины.
+    if (len(list1) % 2) != 0: 
+        if j == ((len(list1) - 1) / 2): 
             print('Median: %i' % (list1[j]))
-            break # Если нашли - сразу выходим из этого цикла.
+            break # if found - break
     else:
-        if j == (len(list1) // 2): # Следующее число после среднего.
+        if j == (len(list1) // 2): # the next value after average.
             print('Median: %.4f' % ((list1[j] + list1[j - 1]) / 2))
             break
-# Наибольшая возрастающая последовательность.
+# biggest incresing sequence.
 for k in range(len(list1)):
     Average += list1[k]
     if not k:
@@ -25,21 +26,21 @@ for k in range(len(list1)):
         if (list1[k] > list1[k - 1]):
             Grow.append(list1[k])
             countGrow += 1
-            if k == (len(list1) - 1) and countGrow > LengthGrow[0]: # На случай если последнее число сформирут самую большую последовательность.
+            if k == (len(list1) - 1) and countGrow > LengthGrow[0]: # for the case if the last value will create the biggest sequence
                 LengthGrow[0] = countGrow
-                tempGrow = [] # Для  хранения самой большой (ОДНОЙ) последовательности.
+                tempGrow = [] # for storing the biggest single sequence
                 tempGrow += Grow
         else:
             if not LengthGrow:LengthGrow.append(countGrow)
-            if (countGrow > LengthGrow[0]): # Если длинна последовательности больше чем предыдущей.
-                LengthGrow[0] = countGrow # Заносим число (длинна последовательности сформированнной до последнего обрывания).
-                tempGrow = [] # Если длинна последовательности окажиться больше чем предыдущая, мы чистим tempGrow.
-                # и добавляем всю последовательность с Grow в tempGrow
+            if (countGrow > LengthGrow[0]): # if the len of following sequence bigger then len of sequence before
+                LengthGrow[0] = countGrow # append value (amount of numbers in the biggest sequence).
+                tempGrow = [] # if the len of the sequence will be bigger then seq. before we freeing tempGrow and add all seq. from Grow to tempGrow
                 tempGrow += Grow
-            Grow = [] # При появлении числа которое ламает последовательность список очиститься!
-            Grow.append(list1[k]) # Добавляем первое значение новой последовательности.
+            Grow = [] # if we found a number in file that destroy our sequence we make Grow free
+            Grow.append(list1[k]) # add the first value of the first new sequence.
             countGrow = 1
-# Наибольшая убывающая последовательность.
+            
+# biggest increasing sequence
 for k in range(len(list1)):
     if not k:
         Fall = []
